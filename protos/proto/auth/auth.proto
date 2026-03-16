@@ -1,0 +1,42 @@
+// protoc -I ./protos/proto ./protos/proto/auth/auth.proto --go_out=./protos/gen/go/ --go_opt=paths=source_relative --go-grpc_out=./protos/gen/go
+syntax = "proto3";
+
+package auth;
+
+option go_package = "grpcgo.v1.auth;auth1";
+
+service Auth {
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc IsAdmin(IsAdminRequest) returns (IsAdminResponse);
+}
+
+message RegisterRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message RegisterResponse {
+  uint64 user_id = 1;
+}
+
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+  string app_id = 3;
+}
+
+message LoginResponse {
+  string token = 1;
+}
+
+
+message IsAdminRequest {
+  uint64 user_id = 1;
+}
+
+message IsAdminResponse {
+  bool is_admin = 1;
+}
+
